@@ -1,0 +1,24 @@
+.result-item {
+  display: flex;
+  flex-direction: row;
+  border: 2px solid red;
+  padding: 7px;
+  .recipe-image {
+    border-radius: 50%;
+    min-height: 90px;
+    min-width: 90px;
+    align-self: center;
+    overflow: hidden;
+    background-size: cover;
+  }
+  .recipe-info {
+    display: flex;
+    flex-direction: column;
+    .recipe-title {
+      font-size: 17px;
+    }
+    .recipe-publisher {
+      font-size: 14px;
+    }
+  }
+}
