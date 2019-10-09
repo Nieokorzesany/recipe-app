@@ -4,11 +4,11 @@ import ResultItem from "./ResultItem";
 import { connect } from "react-redux";
 
 const ResultsList = props => {
-  console.log("list", props);
+  console.log("list", props.searchResults);
   const { searchResults } = props;
   return (
     <div className="recipe-list">
-      {props.searchResults.length
+      {props.searchResults.length > 1
         ? searchResults.map(recipe => (
             <ResultItem
               key={recipe.recipe_id}

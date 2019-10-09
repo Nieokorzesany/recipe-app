@@ -12,7 +12,9 @@ const SearchBar = props => {
         type="text"
         onChange={event => props.getSearchTerm(event.target.value)}
       />
-      <button onClick={() => props.searchButtonHandler()}>Search</button>
+      <button onClick={() => props.searchButtonHandler(props.searchTerm)}>
+        Search
+      </button>
     </div>
   );
 };
@@ -24,8 +26,8 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => {
   return {
     getSearchTerm: term => dispatch({ type: GET_SEARCH_TERM, payload: term }),
-    searchButtonHandler: () =>
-      fetch(`https://www.food2fork.com/api/search?key=${keyPass}&q=${"pork"}`)
+    searchButtonHandler: term =>
+      fetch(`https://www.food2fork.com/api/search?key=${keyPass}&q=${term}`)
         .then(response => response.json())
         .then(data => dispatch({ type: FETCH_RECIPES, payload: data.recipes }))
   };

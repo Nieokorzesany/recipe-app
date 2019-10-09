@@ -1,8 +1,11 @@
+import data from "../Components/recipe.data";
+
 const initialState = {
   searchTerm: "",
-  searchResults: [],
+  searchResults: data,
   display: "",
-  recipe: ""
+  recipe: { ingredients: ["100g ryzu", "500g wieprzowiny"] },
+  shoppingList: []
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -26,6 +29,11 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         searchResults: action.payload
+      };
+    case "ADD_TO_SHOPPING_LIST":
+      return {
+        ...state,
+        shoppingList: [...state.shoppingList, ...action.payload]
       };
     default:
       return state;
