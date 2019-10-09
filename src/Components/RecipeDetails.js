@@ -1,11 +1,12 @@
 import React from "react";
 import "./RecipeDetails.scss";
+import { connect } from "react-redux";
 
 const RecipeDetails = props => {
-  console.log(props);
+  console.log("props recDet", props);
   return (
     <div className="recipe-details">
-      {props.recipe === undefined ? null : (
+      {props.recipe.length ? null : (
         <div>
           <p>{props.recipe.title}</p>
           <img
@@ -14,9 +15,11 @@ const RecipeDetails = props => {
             className="recipe-image"
           />
           <ul>
-            {props.recipe.ingredients.map((ingredient, index) => (
-              <li key={index}>{ingredient}</li>
-            ))}
+            {props.recipe.ingredients === undefined
+              ? null
+              : props.recipe.ingredients.map((ingredient, index) => (
+                  <li key={index}>{ingredient}</li>
+                ))}
           </ul>
         </div>
       )}
@@ -24,4 +27,8 @@ const RecipeDetails = props => {
   );
 };
 
-export default RecipeDetails;
+const mapStateToProps = state => {
+  return { ...state };
+};
+
+export default connect(mapStateToProps)(RecipeDetails);

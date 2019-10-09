@@ -1,16 +1,36 @@
 import React from "react";
 import "./SearchBar.scss";
+import { connect } from "react-redux";
+import { GET_SEARCH_TERM, FETCH_RECIPES } from "../Redux/Actions";
+import keyPass from "./config";
 
 const SearchBar = props => {
+  console.log("props", props);
   return (
     <div className="SearchBar">
       <input
         type="text"
-        onChange={event => props.onChange(event.target.value)}
+        onChange={event => props.getSearchTerm(event.target.value)}
       />
-      <button onClick={() => props.onSearchClick()}>Search</button>
+      <button onClick={() => props.searchButtonHandler()}>Search</button>
     </div>
   );
 };
 
-export default SearchBar;
+const mapStateToProps = state => ({
+  ...state
+});
+
+const mapDispatchToProps = dispatch => {
+  return {
+    getSearchTerm: term => dispatch({ type: GET_SEARCH_TERM, payload: term }),
+    searchButtonHandler: () =>
+      fetch(`https://www.food2fork.com/api/search?key=${keyPass}&q=${"pork"}`)
+        .then(response => response.json())
+        .then(data => dispatch({ type: FETCH_RECIPES, payload: data.recipes }))
+  };
+};
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(SearchBar);

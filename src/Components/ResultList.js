@@ -1,19 +1,20 @@
 import React from "react";
 import "./ResultList.scss";
 import ResultItem from "./ResultItem";
+import { connect } from "react-redux";
 
 const ResultsList = props => {
+  console.log("list", props);
   const { searchResults } = props;
   return (
     <div className="recipe-list">
-      {searchResults.length
+      {props.searchResults.length
         ? searchResults.map(recipe => (
             <ResultItem
               key={recipe.recipe_id}
               id={recipe.recipe_id}
               image={recipe.image_url}
               publisher={recipe.publisher}
-              display={props.display}
               title={recipe.title}
             ></ResultItem>
           ))
@@ -22,4 +23,8 @@ const ResultsList = props => {
   );
 };
 
-export default ResultsList;
+const mapStateToProps = state => ({
+  ...state
+});
+
+export default connect(mapStateToProps)(ResultsList);
