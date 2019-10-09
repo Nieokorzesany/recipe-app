@@ -71,13 +71,7 @@ class App extends React.Component {
             searchResults={this.state.searchResults}
             display={this.displayRecipe}
           />
-          <RecipeDetails
-            name={
-              this.props.recipe === undefined
-                ? null
-                : this.props.recipe.publisher
-            }
-          />
+          <RecipeDetails recipe={this.props.recipe} />
           <ShoppingList />
         </div>
       </div>
@@ -96,7 +90,7 @@ const mapDispatchToProps = dispatch => {
     getRecipeInfo: id =>
       fetch(`https://www.food2fork.com/api/get?key=${keyPass}&rId=${id}`)
         .then(response => response.json())
-        .then(data => dispatch({ type: GET_RECIPE_INFO, payload: data }))
+        .then(data => dispatch({ type: GET_RECIPE_INFO, payload: data.recipe }))
   };
 };
 export default connect(
