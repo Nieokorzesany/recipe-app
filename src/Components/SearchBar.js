@@ -2,7 +2,7 @@ import React from "react";
 import "./SearchBar.scss";
 import { connect } from "react-redux";
 import { GET_SEARCH_TERM, FETCH_RECIPES } from "../Redux/Actions";
-import keyPass from "./config";
+import { keyPass2 } from "./config";
 
 const SearchBar = props => {
   console.log("props", props);
@@ -27,7 +27,7 @@ const mapDispatchToProps = dispatch => {
   return {
     getSearchTerm: term => dispatch({ type: GET_SEARCH_TERM, payload: term }),
     searchButtonHandler: term =>
-      fetch(`https://www.food2fork.com/api/search?key=${keyPass}&q=${term}`)
+      fetch(`https://www.food2fork.com/api/search?key=${keyPass2}&q=${term}`)
         .then(response => response.json())
         .then(data => dispatch({ type: FETCH_RECIPES, payload: data.recipes }))
   };

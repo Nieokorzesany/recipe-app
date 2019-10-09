@@ -2,7 +2,7 @@ import React from "react";
 import "./ResultItem.scss";
 import { connect } from "react-redux";
 import { GET_ID, GET_RECIPE_INFO } from "../Redux/Actions";
-import keyPass from "./config";
+import { keyPass2 } from "./config";
 
 const ResultItem = props => {
   return (
@@ -33,7 +33,7 @@ const mapDispatchToProps = dispatch => {
   return {
     getID: id => dispatch({ type: GET_ID, payload: id }),
     getRecipeInfo: id =>
-      fetch(`https://www.food2fork.com/api/get?key=${keyPass}&rId=${id}`)
+      fetch(`https://www.food2fork.com/api/get?key=${keyPass2}&rId=${id}`)
         .then(response => response.json())
         .then(data => dispatch({ type: GET_RECIPE_INFO, payload: data.recipe }))
   };
