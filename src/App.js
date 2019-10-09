@@ -5,6 +5,8 @@ import ResultsList from "./Components/ResultList";
 import data from "./Components/recipe.data";
 import RecipeDetails from "./Components/RecipeDetails";
 import ShoppingList from "./Components/ShoppingList";
+import { connect } from "react-redux";
+import { GET_SEARCH_TERM, GET_ID, GET_RECIPE_INFO } from "./Redux/Actions";
 
 import "./App.scss";
 
@@ -53,14 +55,15 @@ class App extends React.Component {
   };
 
   displayRecipe = id => {
-    this.setState({ display: id }, () => this.getDisplayInfo());
+    this.props.getID(id);
+    this.props.getRecipeInfo(id);
   };
 
   render() {
     return (
       <div className="App">
         <SearchBar
-          onChange={this.onSearchTermChange}
+          onChange={this.props.getSearchTerm}
           onSearchClick={this.SearchButtonHandler}
         />
         <div className="main-content">
@@ -68,7 +71,13 @@ class App extends React.Component {
             searchResults={this.state.searchResults}
             display={this.displayRecipe}
           />
-          <RecipeDetails name={this.state.recipe.title} />
+          <RecipeDetails
+            name={
+              this.props.recipe === undefined
+                ? null
+                : this.props.recipe.publisher
+            }
+          />
           <ShoppingList />
         </div>
       </div>
@@ -76,4 +85,23 @@ class App extends React.Component {
   }
 }
 
-export default App;
+const mapStateToProps = state => ({
+  ...state
+});
+
+const mapDispatchToProps = dispatch => {
+  return {
+    getSearchTerm: term => dispatch({ type: GET_SEARCH_TERM, payload: term }),
+    getID: id => dispatch({ type: GET_ID, payload: id }),
+    getRecipeInfo: id =>
+      fetch(`https://www.food2fork.com/api/get?key=${keyPass}&rId=${id}`)
+        .then(response => response.json())
+        .then(data => dispatch({ type: GET_RECIPE_INFO, payload: data }))
+  };
+};
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+  // or you can use action creators directly instead of mapDispatchToProps
+  // { action, otherAction }
+)(App);
