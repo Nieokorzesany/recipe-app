@@ -20,7 +20,7 @@ const RecipeDetails = props => {
           >
             Add to Shopping List
           </button>
-          <ul>
+          <ul className="ingredients-list">
             {props.recipe.ingredients.map((ingredient, index) => (
               <li key={index}>{ingredient}</li>
             ))}

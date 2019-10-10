@@ -2,10 +2,10 @@ import data from "../Components/recipe.data";
 
 const initialState = {
   searchTerm: "",
-  searchResults: data,
+  searchResults: [],
   display: "",
-  recipe: { ingredients: ["100g ryzu", "500g wieprzowiny"] },
-  shoppingList: []
+  recipe: [],
+  shoppingList: ["2 eggs", "2 eggs", "2 eggs", "2 eggs"]
 };
 
 const rootReducer = (state = initialState, action) => {
