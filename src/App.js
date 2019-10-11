@@ -5,7 +5,7 @@ import RecipeDetails from "./Components/RecipeDetails";
 import ShoppingList from "./Components/ShoppingList";
 import { connect } from "react-redux";
 import { GET_RECIPE_INFO } from "./Redux/Actions";
-import { keyPass2 } from "./Components/config";
+import { keyPass1 } from "./Components/config";
 
 import "./App.scss";
 
@@ -15,7 +15,7 @@ class App extends React.Component {
     this.state = {};
   }
   componentDidMount() {
-    // this.props.getRecipeInfo("46895");
+    this.props.getRecipeInfo("46895");
   }
   render() {
     return (
@@ -36,7 +36,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => {
-  const url = `https://www.food2fork.com/api/get?key=${keyPass2}&rId=`;
+  const url = `https://www.food2fork.com/api/get?key=${keyPass1}&rId=`;
   return {
     getRecipeInfo: id =>
       fetch(`${url}${id}`)
