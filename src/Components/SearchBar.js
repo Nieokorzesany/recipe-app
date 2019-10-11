@@ -4,8 +4,7 @@ import { connect } from "react-redux";
 import { GET_SEARCH_TERM, FETCH_RECIPES } from "../Redux/Actions";
 import { keyPass1 } from "./config";
 
-const SearchBar = props => {
-  console.log("props", props);
+const SearchBar = ({ searchTerm, getSearchTerm, searchButtonHandler }) => {
   return (
     <div className="SearchBar">
       <img
@@ -16,16 +15,16 @@ const SearchBar = props => {
         <input
           className="search-input"
           type="text"
-          onChange={event => props.getSearchTerm(event.target.value)}
+          onChange={event => getSearchTerm(event.target.value)}
           placeholder="Search for something tasty"
           onKeyPress={event => {
             if (event.key === "Enter") {
-              props.searchButtonHandler(props.searchTerm);
+              searchButtonHandler(searchTerm);
             }
           }}
         />
         <button
-          onClick={() => props.searchButtonHandler(props.searchTerm)}
+          onClick={() => searchButtonHandler(searchTerm)}
           className="search-button"
         >
           Search
@@ -38,14 +37,15 @@ const SearchBar = props => {
 };
 
 const mapStateToProps = state => ({
-  ...state
+  searchTerm: state.searchTerm
 });
 
 const mapDispatchToProps = dispatch => {
+  const url = `https://www.food2fork.com/api/search?key=${keyPass1}&q=`;
   return {
     getSearchTerm: term => dispatch({ type: GET_SEARCH_TERM, payload: term }),
     searchButtonHandler: term =>
-      fetch(`https://www.food2fork.com/api/search?key=${keyPass1}&q=${term}`)
+      fetch(`${url}${term}`)
         .then(response => response.json())
         .then(data => dispatch({ type: FETCH_RECIPES, payload: data.recipes }))
   };

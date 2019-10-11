@@ -3,12 +3,10 @@ import "./ResultList.scss";
 import ResultItem from "./ResultItem";
 import { connect } from "react-redux";
 
-const ResultsList = props => {
-  console.log("list", props.searchResults);
-  const { searchResults } = props;
+const ResultsList = ({ searchResults }) => {
   return (
     <div className="recipe-list">
-      {props.searchResults.length > 1
+      {searchResults.length > 1
         ? searchResults.map(recipe => (
             <ResultItem
               key={recipe.recipe_id}
@@ -24,7 +22,7 @@ const ResultsList = props => {
 };
 
 const mapStateToProps = state => ({
-  ...state
+  searchResults: state.searchResults
 });
 
 export default connect(mapStateToProps)(ResultsList);

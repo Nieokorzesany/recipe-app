@@ -4,36 +4,35 @@ import { connect } from "react-redux";
 import { GET_ID, GET_RECIPE_INFO } from "../Redux/Actions";
 import { keyPass2 } from "./config";
 
-const ResultItem = props => {
+const ResultItem = ({ id, image, title, publisher, getID, getRecipeInfo }) => {
   return (
     <div
       className="result-item"
       onClick={() => {
-        props.getID(props.id);
-        props.getRecipeInfo(props.id);
+        getID(id);
+        getRecipeInfo(id);
       }}
     >
       <div
         className="recipe-image"
-        style={{ backgroundImage: `url(${props.image})` }}
+        style={{ backgroundImage: `url(${image})` }}
       ></div>
       <div className="recipe-info">
-        <p className="recipe-title">{props.title}</p>
-        <p className="recipe-publisher">{props.publisher}</p>
+        <p className="recipe-title">{title}</p>
+        <p className="recipe-publisher">{publisher}</p>
       </div>
     </div>
   );
 };
 
-const mapStateToProps = state => ({
-  ...state
-});
+const mapStateToProps = state => ({});
 
 const mapDispatchToProps = dispatch => {
+  const url = `https://www.food2fork.com/api/get?key=${keyPass2}&rId=`;
   return {
     getID: id => dispatch({ type: GET_ID, payload: id }),
     getRecipeInfo: id =>
-      fetch(`https://www.food2fork.com/api/get?key=${keyPass2}&rId=${id}`)
+      fetch(`${url}${id}`)
         .then(response => response.json())
         .then(data => dispatch({ type: GET_RECIPE_INFO, payload: data.recipe }))
   };

@@ -20,8 +20,6 @@ const App = () => {
   );
 };
 
-const mapStateToProps = state => ({
-  ...state
-});
+const mapStateToProps = state => ({});
 
 export default connect(mapStateToProps)(App);

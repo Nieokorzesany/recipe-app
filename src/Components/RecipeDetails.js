@@ -3,25 +3,18 @@ import "./RecipeDetails.scss";
 import { connect } from "react-redux";
 import { ADD_TO_SHOPPING_LIST } from "../Redux/Actions";
 
-const RecipeDetails = props => {
-  console.log("props recDet", props.recipe.length);
+const RecipeDetails = ({ addToShoppingList, ingredients, title, image }) => {
   return (
     <div className="recipe-details">
-      {props.recipe.length < 1 ? null : (
+      {ingredients === undefined ? null : (
         <div className="recipe-container">
-          <p>{props.recipe.title}</p>
-          <img
-            src={props.recipe.image_url}
-            alt="food"
-            className="recipe-image"
-          />
-          <button
-            onClick={() => props.addToShoppingList(props.recipe.ingredients)}
-          >
+          <p>{title}</p>
+          <img src={image} alt="food" className="recipe-image" />
+          <button onClick={() => addToShoppingList(ingredients)}>
             Add to Shopping List
           </button>
           <ul className="ingredients-list">
-            {props.recipe.ingredients.map((ingredient, index) => (
+            {ingredients.map((ingredient, index) => (
               <li key={index}>{ingredient}</li>
             ))}
           </ul>
@@ -32,7 +25,11 @@ const RecipeDetails = props => {
 };
 
 const mapStateToProps = state => {
-  return { ...state };
+  return {
+    ingredients: state.recipe.ingredients,
+    image: state.recipe.image_url,
+    title: state.recipe.title
+  };
 };
 
 const mapDispatchToProps = dispatch => {

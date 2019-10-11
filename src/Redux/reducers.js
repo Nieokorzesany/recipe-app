@@ -5,7 +5,7 @@ const initialState = {
   searchResults: [],
   display: "",
   recipe: [],
-  shoppingList: ["2 eggs", "2 eggs", "2 eggs", "2 eggs"]
+  shoppingList: []
 };
 
 const rootReducer = (state = initialState, action) => {

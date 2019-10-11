@@ -2,14 +2,13 @@ import React from "react";
 import "./ShoppingList.scss";
 import { connect } from "react-redux";
 
-const ShoppingList = props => {
-  console.log("shoplist", props.shoppingList);
+const ShoppingList = ({ shoppingList }) => {
   return (
     <div className="shopping-list">
-      {props.shoppingList.length !== 0 ? (
+      {shoppingList !== undefined ? (
         <div className="note">
           <p>Shopping List</p>
-          {props.shoppingList.map((el, index) => {
+          {shoppingList.map((el, index) => {
             return <p key={index}>- {el}</p>;
           })}
         </div>
@@ -19,7 +18,7 @@ const ShoppingList = props => {
 };
 
 const mapStateToProps = state => ({
-  ...state
+  shoppingList: state.shoppingList
 });
 
 export default connect(mapStateToProps)(ShoppingList);
