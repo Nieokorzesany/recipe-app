@@ -8,8 +8,12 @@ const RecipeDetails = ({ addToShoppingList, ingredients, title, image }) => {
     <div className="recipe-details">
       {ingredients === undefined ? null : (
         <div className="recipe-container">
-          <p>{title}</p>
-          <img src={image} alt="food" className="recipe-image" />
+          <div className="banner" style={{ backgroundImage: `url(${image})` }}>
+            <div className="recipe-detail-title">
+              <p>{title}</p>
+            </div>
+          </div>
+
           <button onClick={() => addToShoppingList(ingredients)}>
             Add to Shopping List
           </button>
