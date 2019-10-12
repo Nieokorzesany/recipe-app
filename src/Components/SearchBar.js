@@ -1,10 +1,16 @@
 import React from "react";
 import "./SearchBar.scss";
 import { connect } from "react-redux";
-import { GET_SEARCH_TERM, FETCH_RECIPES } from "../Redux/Actions";
-import { keyPass1 } from "./config";
+import { getSearchTerm, searchButtonHandler } from "../Redux/actions";
+import FavoriteList from "./FavoriteList";
 
-const SearchBar = ({ searchTerm, getSearchTerm, searchButtonHandler }) => {
+const SearchBar = ({
+  searchTerm,
+  getSearchTerm,
+  searchButtonHandler,
+  favListShow,
+  favoriteIDs
+}) => {
   return (
     <div className="SearchBar">
       <img
@@ -31,25 +37,27 @@ const SearchBar = ({ searchTerm, getSearchTerm, searchButtonHandler }) => {
         </button>
       </div>
 
-      <div className="fav-list">fav-list</div>
+      <div className="fav-list" onClick={() => favListShow()}>
+        <span className="likes-count">{favoriteIDs.length}</span>
+      </div>
+      <FavoriteList />
     </div>
   );
 };
 
 const mapStateToProps = state => ({
-  searchTerm: state.searchTerm
+  searchTerm: state.searchTerm,
+  favoriteIDs: state.favoriteIDs
 });
 
 const mapDispatchToProps = dispatch => {
-  const url = `https://www.food2fork.com/api/search?key=${keyPass1}&q=`;
   return {
-    getSearchTerm: term => dispatch({ type: GET_SEARCH_TERM, payload: term }),
-    searchButtonHandler: term =>
-      fetch(`${url}${term}`)
-        .then(response => response.json())
-        .then(data => dispatch({ type: FETCH_RECIPES, payload: data.recipes }))
+    getSearchTerm: term => dispatch(getSearchTerm(term)),
+    searchButtonHandler: term => searchButtonHandler(term, dispatch),
+    favListShow: () => dispatch({ type: "TOGGLE_FAV_LIST_DROPDOWN" })
   };
 };
+
 export default connect(
   mapStateToProps,
   mapDispatchToProps

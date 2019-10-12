@@ -3,11 +3,11 @@ import "./ResultList.scss";
 import ResultItem from "./ResultItem";
 import { connect } from "react-redux";
 
-const ResultsList = ({ searchResults }) => {
+const ResultsList = props => {
   return (
     <div className="recipe-list">
-      {searchResults.length > 1
-        ? searchResults.map(recipe => (
+      {props.searchResults !== undefined
+        ? props.searchResults.map(recipe => (
             <ResultItem
               key={recipe.recipe_id}
               id={recipe.recipe_id}

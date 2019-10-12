@@ -1,7 +1,7 @@
 import React from "react";
 import "./RecipeDetails.scss";
 import { connect } from "react-redux";
-import { ADD_TO_SHOPPING_LIST } from "../Redux/Actions";
+import { addToShoppingList } from "../Redux/actions";
 
 const RecipeDetails = ({ addToShoppingList, ingredients, title, image }) => {
   return (
@@ -38,11 +38,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    addToShoppingList: list =>
-      dispatch({
-        type: ADD_TO_SHOPPING_LIST,
-        payload: list
-      })
+    addToShoppingList: list => dispatch(addToShoppingList(list))
   };
 };
 

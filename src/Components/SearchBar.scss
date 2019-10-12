@@ -56,12 +56,19 @@
     }
   }
 
-  .btn:hover,
-  .btn-small:hover {
-    transform: scale(1.05);
-  }
-  .btn:focus,
-  .btn-small:focus {
-    outline: none;
+  .fav-list {
+    background-image: url("../assets/heart-icon.png");
+    color: #fff;
+    font-size: 27px;
+    margin: 0;
+    padding: 5px;
+    display: inline-table;
+    height: auto;
+    width: 60px;
+    text-transform: uppercase;
+    background-repeat: no-repeat;
+    background-position: center;
+    align-self: center;
+    cursor: pointer;
   }
 }

@@ -1,40 +1,53 @@
 import React from "react";
 import "./ResultItem.scss";
 import { connect } from "react-redux";
-import { GET_ID, GET_RECIPE_INFO } from "../Redux/Actions";
-import { keyPass1 } from "./config";
+import { getID, getRecipeInfo, likeRecipe } from "../Redux/actions";
 
-const ResultItem = ({ id, image, title, publisher, getID, getRecipeInfo }) => {
+const ResultItem = ({
+  id,
+  image,
+  title,
+  publisher,
+  getID,
+  getRecipeInfo,
+  likeRecipe,
+  favoriteIDs
+}) => {
   return (
-    <div
-      className="result-item"
-      onClick={() => {
-        getID(id);
-        getRecipeInfo(id);
-      }}
-    >
+    <div className="result-item" onClick={() => getID(id)}>
       <div
         className="recipe-image"
         style={{ backgroundImage: `url(${image})` }}
+        onClick={() => getRecipeInfo(id)}
       ></div>
       <div className="recipe-info">
-        <p className="recipe-title">{title}</p>
-        <p className="recipe-publisher">{publisher}</p>
+        <p className="recipe-title" onClick={() => getRecipeInfo(id)}>
+          {title}
+        </p>
+        <div className="likes">
+          <p className="recipe-publisher">{publisher}</p>
+
+          <label
+            className={`toggle-heart ${
+              favoriteIDs.includes(id) ? "toggle-heart-liked" : null
+            }`}
+            onClick={() => likeRecipe(id, image, title)}
+          >
+            ❤
+          </label>
+        </div>
       </div>
     </div>
   );
 };
 
-const mapStateToProps = state => ({});
+const mapStateToProps = state => ({ favoriteIDs: state.favoriteIDs });
 
 const mapDispatchToProps = dispatch => {
-  const url = `https://www.food2fork.com/api/get?key=${keyPass1}&rId=`;
   return {
-    getID: id => dispatch({ type: GET_ID, payload: id }),
-    getRecipeInfo: id =>
-      fetch(`${url}${id}`)
-        .then(response => response.json())
-        .then(data => dispatch({ type: GET_RECIPE_INFO, payload: data.recipe }))
+    getID: id => dispatch(getID(id)),
+    getRecipeInfo: id => getRecipeInfo(id, dispatch),
+    likeRecipe: (id, image, title) => dispatch(likeRecipe(id, image, title))
   };
 };
 export default connect(
